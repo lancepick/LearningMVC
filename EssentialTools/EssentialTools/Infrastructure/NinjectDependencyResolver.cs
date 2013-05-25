@@ -19,6 +19,8 @@ namespace EssentialTools.Infrastructure
         public IEnumerable<object> GetServices(Type serviceType) { return kernel.GetAll(serviceType); }
         private void AddBindings() {
             kernel.Bind<IValueCalculator>().To<LinqValueCalculator>();
+            kernel.Bind<IDiscountHelper>().To<DefaultDiscountHelper>().WithPropertyValue("DiscountSize",50M);
+            kernel.Bind<IDiscountHelper>().To<FlexibleDiscountHelper>().WhenInjectedInto<LinqValueCalculator>();
         }
     }
 }
